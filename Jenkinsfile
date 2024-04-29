@@ -29,6 +29,9 @@ pipeline {
             archiveArtifacts artifacts: '**/target/**/*.jar', fingerprint: true
             archiveArtifacts artifacts: '**/target/**/*.war', fingerprint: true
             archiveArtifacts artifacts: '**/target/**/*.html', fingerprint: true
+             archiveArtifacts artifacts: '**/target/**/*.xml', fingerprint: true
+
+
         }
     }
 }
