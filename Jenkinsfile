@@ -1,6 +1,6 @@
 pipeline {
-agent any
-stages {
+    agent any
+    stages {
         stage('Initialize') {
             steps {
                 // 清理前一个构建的工作空间
@@ -10,36 +10,43 @@ stages {
         
         stage('Build') {
             steps {
-                // 执行 Maven 构建
-                sh 'mvn clean install'
+                // 构建项目，跳过测试
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         
         stage('Test') {
             steps {
-                // 运行测试和生成 surefire 报告
-                sh 'mvn test'
+                // 运行测试并生成 Surefire 报告
+                sh 'mvn test surefire-report:report'
             }
             post {
                 always {
-                    // 收集测试结果
+                    // 收集 Surefire 测试结果
                     junit '**/target/surefire-reports/*.xml'
+                    // 归档 Surefire 报告
+                    archiveArtifacts artifacts: '**/target/site/surefire-report.html', fingerprint: true
                 }
             }
         }
         
         stage('Generate Javadoc') {
             steps {
-                // 生成 Javadoc
+                // 生成 Javadoc 并打包为 JAR
                 sh 'mvn javadoc:javadoc javadoc:jar'
+            }
+            post {
+                always {
+                    // 归档生成的 Javadoc
+                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                }
             }
         }
         
         stage('Archive Artifacts') {
             steps {
-                // 归档构建的工件
+                // 归档构建产物
                 archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-                archiveArtifacts artifacts: '**/target/site/apidocs/**/*', fingerprint: true
             }
         }
     }
