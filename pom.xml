@@ -120,9 +120,6 @@
                     <failOnViolation>false</failOnViolation>
                     <!-- printFailingErrors is pretty useful -->
                     <printFailingErrors>true</printFailingErrors>
-                    <rulesets>
-                        <ruleset>ruleset.xml</ruleset>
-                    </rulesets>
                 </configuration>
                 <executions>
                     <execution>
