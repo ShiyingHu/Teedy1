@@ -116,7 +116,7 @@
           <!-- printFailingErrors is pretty useful -->
           <printFailingErrors>true</printFailingErrors>
           <rulesets>
-            <ruleset>/mnt/d/CS304/Teedy/quickstart.xml</ruleset>
+            <ruleset>/mnt/d/桌面/软工/Teedy/quickstart.xml</ruleset>
           </rulesets>
         </configuration>
         <executions>
